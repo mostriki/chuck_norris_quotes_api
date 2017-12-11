@@ -12,12 +12,21 @@ class QuotesController < ApplicationController
 
   def create
     @quote = Quote.create!(quote_params)
-    json_response(@quote)
+    if @quote
+      render status: 201, json: { id: @quote.id,
+                                  author: @quote.author,
+                                  content: @quote.content,
+                                  message: "Your quote has been created succesfully!" }
+    end
   end
 
   def update
     @quote = Quote.find(params[:id])
-    @quote.update(quote_params)
+    if @quote.update!(quote_params)
+      render status: 200, json: {
+        message: "Your quote has been updated succesfully."
+      }
+    end
   end
 
   def destroy
