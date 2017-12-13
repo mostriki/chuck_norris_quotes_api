@@ -12,6 +12,7 @@ class QuotesController < ApplicationController
 
   def show
     @quote = Quote.find(params[:id])
+    
     json_response(@quote)
   end
 
@@ -27,11 +28,6 @@ class QuotesController < ApplicationController
 
   def update
     @quote = Quote.find(params[:id])
-    if @quote.update!(quote_params)
-      render status: 200, json: {
-        message: "Your quote has been updated succesfully."
-      }
-    end
   end
 
   def destroy
@@ -40,9 +36,6 @@ class QuotesController < ApplicationController
   end
 
   private
-  def json_response(object, status = :ok)
-    render json: object, status: status
-  end
 
   def quote_params
     params.permit(:author, :content)

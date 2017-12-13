@@ -22,3 +22,26 @@ describe "post a quote route", :type => :request do
     expect(response).to have_http_status(:created)
   end
 end
+
+
+describe "patch a post route", :type => :request do
+  before do
+    post '/quotes', params: { :author => 'test_author', :content => 'test_content' }
+    @y = Quote.first.id
+    patch "/quotes/#{@y}?", :params => {:author => "new_author"}
+  end
+
+  it 'returns a 200 ok status for update' do
+    expect(response).to have_http_status(:success)
+  end
+end
+
+describe "get a post route", :type => :request do
+  before do
+    post '/quotes', params: { :content => 'test_content' }
+  end
+
+  it 'returns a 422 :not_found for bad POST request' do
+    expect(response).to have_http_status(:unprocessable_entity)
+  end
+end
