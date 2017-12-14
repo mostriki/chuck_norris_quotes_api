@@ -1,4 +1,6 @@
 class Quote < ApplicationRecord
+  belongs_to :user
+  
   validates :author, :presence => true
   validates :content, :presence => true
 
